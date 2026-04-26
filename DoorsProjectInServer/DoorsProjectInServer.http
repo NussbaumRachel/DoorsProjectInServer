@@ -1,0 +1,6 @@
+@DoorsProjectInServer_HostAddress = http://localhost:5245
+
+GET {{DoorsProjectInServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
