@@ -57,13 +57,7 @@ namespace DoorsProjectInServer.Controllers
             return Bl.checks.DeleteById(id);
 
         }
-        [HttpDelete]
-        [Route("deleteId")]
-        public async Task<Boolean> deleteChec(int id)
-        {
-            return Bl.checks.DeleteById(id);
-
-        }
+       
 
     }
     
