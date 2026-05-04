@@ -10,6 +10,8 @@ namespace Dal.Api
     {
         public ICheck checks { get; }
         public IOrders orders { get; }
+        public IEmployee employees { get; }
+
         public ICustomers customers { get; }
         public IDoors doors { get; }
         public IDoorsFrames doorFrames { get; }

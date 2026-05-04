@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Bl.Models;
 
-public  class BlOrder
+public class BlOrder
 {
     public int Id { get; set; }
 
@@ -12,7 +12,13 @@ public  class BlOrder
 
     public string? CustName { get; set; }
 
-    public DateOnly? DeliveryDate { get; set; }
+    public DateTime? DeliveryDate { get; set; }
+    
+    public DateTime? OrderDate { get; set; }
+
+    public DateTime? UpdateDate { get; set; }
+    
+    public string? EmployeeId { get; set; }
 
     public string? Street { get; set; }
 
@@ -30,7 +36,7 @@ public  class BlOrder
 
     public string? Status { get; set; }
 
-    public List<BlOrderItem> orderItems { get; set; } 
-    
+    public List<BlOrderItem> orderItems { get; set; }
+
 
 }

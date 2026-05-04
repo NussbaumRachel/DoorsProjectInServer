@@ -37,7 +37,7 @@ namespace Dal.Services
         public bool Delete(OrderItem item)
         {
             try
-            {   
+            {
                 dbManager.OrderItems.Remove(item);
                 dbManager.SaveChanges();
                 return true;
@@ -52,8 +52,8 @@ namespace Dal.Services
         //{
         //   return dbManager.OrderItems.Include(i => i.Order).ToList();
         //}
-        public async Task<List<OrderItem>> GetAll()=> dbManager.OrderItems.ToList();
-        
+        public async Task<List<OrderItem>> GetAll() => dbManager.OrderItems.ToList();
+
         public async Task<List<OrderItem>> getByOrderId(int ordId) => GetAll().Result.FindAll(oi => oi.OrderId == ordId);
 
         public async Task<OrderItem> get(int id)

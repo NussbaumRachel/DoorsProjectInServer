@@ -1,5 +1,6 @@
 ﻿using Bl.Api;
 using Bl.Models;
+using Dal.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DoorsProjectInServer.Controllers
@@ -21,5 +22,19 @@ namespace DoorsProjectInServer.Controllers
         {
             return Bl.customers.GetAll();
         }
-    }  
+        [HttpPost]
+        [Route("Add")]
+        public  async Task<bool> AddCustomer(BlCustomer newCustomer)
+        {
+            return await Bl.customers.Create(newCustomer);
+             
+        }
+        //[HttpDelete]
+        //[Route("Delete")]
+        //public async Task<Boolean> deleteCustomer(int id)
+        //{
+        //    return Bl.customers.Delete(id);
+
+        //}
+    }
 }

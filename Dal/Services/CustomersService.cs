@@ -8,30 +8,30 @@ using Dal.Models;
 
 namespace Dal.Services
 {
-    public class CustomersService:ICustomers
+    public class CustomersService : ICustomers
     {
         DbManager db;
         public CustomersService(DbManager db)
         {
             this.db = db;
         }
-        public void Create(Customer item)
+        public async Task<bool> Create(Customer item)
         {
             if (item == null)
-            {
+                throw new ArgumentNullException(nameof(item));
 
-                throw new ArgumentNullException("item");
-            }
             try
             {
-                db.Customers.Add(item);
-                db.SaveChanges();
+                await db.Customers.AddAsync(item);
+                await db.SaveChangesAsync();
+                return true;
             }
             catch
             {
-                throw new Exception("הלקוח שנסית להכניס אינו תקין");
+                throw new Exception("Insert failed");
             }
         }
+        
         public void Update(Customer item) { }
         public bool Delete(Customer item)
         {
@@ -49,7 +49,7 @@ namespace Dal.Services
             //}
         }
         public void DeleteAll() { }
-        public async Task<Customer>  Get(string id)
+        public async Task<Customer> Get(string id)
         {
             try
             {
@@ -61,5 +61,10 @@ namespace Dal.Services
             }
         }
         public async Task<List<Customer>> GetAll() { return db.Customers.ToList(); }
+
+        void ICrud<Customer>.Create(Customer item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Bl.Models;
 
-public  class BlCustomer
+public class BlCustomer
 {
     public string Id { get; set; } = null!;
 
@@ -25,4 +25,8 @@ public  class BlCustomer
     public string? Cn { get; set; }
 
     public string? Notes { get; set; }
+    public bool Equals(BlCustomer c)
+    {
+        return Id == c.Id && Name == c.Name;
+    }
 }

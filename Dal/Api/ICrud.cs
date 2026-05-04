@@ -11,7 +11,7 @@ namespace Dal.Api
         public void Create(T item);
         public void Update(T item);
         public bool Delete(T item);
-             
+
         public Task<List<T>> GetAll();
     }
 }

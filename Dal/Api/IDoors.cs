@@ -7,8 +7,8 @@ using Dal.Models;
 
 namespace Dal.Api
 {
-    public interface IDoors: ICrud<Door>
-        
+    public interface IDoors : ICrud<Door>
+
     {
         public Task<Door> Get(int id);
         public void DeleteAll();

@@ -85,7 +85,7 @@ namespace Dal.Services
 
         public async Task<List<Check>> GetAll()
         {
-          return db.Checks.ToList();
+            return db.Checks.ToList();
         }
 
         public void Update(Check item)

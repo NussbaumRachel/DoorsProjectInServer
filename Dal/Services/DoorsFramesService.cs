@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Dal.Services
 {
-    public class DoorsFramesService: IDoorsFrames
-        
+    public class DoorsFramesService : IDoorsFrames
+
     {
         DbManager db;
         public DoorsFramesService(DbManager db)
@@ -25,7 +25,7 @@ namespace Dal.Services
             }
             try
             {
-                db.DoorFramesTables.Add(item);
+                db.DoorFrames.Add(item);
                 db.SaveChanges();
                 return item.Id;
             }
@@ -35,11 +35,12 @@ namespace Dal.Services
             }
         }
         public void Update(DoorFrame item) { }
-        public bool Delete(DoorFrame item) {
+        public bool Delete(DoorFrame item)
+        {
             try
             {
                 var df = GetAll().Result.Find(df => df.Id == item.Id);
-                db.DoorFramesTables.Remove(df);
+                db.DoorFrames.Remove(df);
                 db.SaveChanges();
                 return true;
             }
@@ -55,7 +56,7 @@ namespace Dal.Services
             var ch = GetAll().Result.Find(c => c.Id == id);
             try
             {
-                db.DoorFramesTables.Remove(ch);
+                db.DoorFrames.Remove(ch);
                 db.SaveChanges();
                 return true;
             }
@@ -77,7 +78,7 @@ namespace Dal.Services
                 throw new ArgumentNullException("not found!");
             }
         }
-        public async Task<List<DoorFrame>> GetAll() { return db.DoorFramesTables.ToList(); }
+        public async Task<List<DoorFrame>> GetAll() { return db.DoorFrames.ToList(); }
 
         void ICrud<DoorFrame>.Create(DoorFrame item)
         {

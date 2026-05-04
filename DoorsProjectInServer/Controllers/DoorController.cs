@@ -10,7 +10,7 @@ namespace DoorsProjectInServer.Controllers
     public class DoorController : Controller
     {
         IBl bl;
-        public DoorController (IBl bl)
+        public DoorController(IBl bl)
         {
             this.bl = bl;
         }
@@ -24,7 +24,7 @@ namespace DoorsProjectInServer.Controllers
         [Route("Add")]
         public int AddDoor(BlDoor newDoor)
         {
-           return bl.doors.Create(newDoor).Result;
+            return bl.doors.Create(newDoor).Result;
         }
         [HttpDelete]
         [Route("Delete")]

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Dal.Models;
 namespace Dal.Api
 {
-    public interface ICheck:ICrud<Check>
+    public interface ICheck : ICrud<Check>
     {
         public Task<Check> Get(int id);
         public void DeleteAll(List<Check> l);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Bl.Models;
 namespace Bl.Api
 {
-    public interface IBlCheck:ICrud<BlCheck>
+    public interface IBlCheck : ICrud<BlCheck>
     {
         public BlCheck Get(int id);
 

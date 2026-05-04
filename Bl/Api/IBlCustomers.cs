@@ -9,5 +9,7 @@ namespace Bl.Api
     public interface IBlCustomers : ICrud<BlCustomer>
     {
         public BlCustomer Get(string id);
+        public Task<bool> Create(BlCustomer item);
+
     }
 }

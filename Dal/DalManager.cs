@@ -19,14 +19,14 @@ namespace Dal
         public IDoors doors { get; }
 
         public IDoorsFrames doorFrames { get; }
+        public IEmployee employees { get; }
 
         public ICheck checks { get; }
-        public IOrderItems orderItems { get ; }
+        public IOrderItems orderItems { get; }
 
         public DalManager()
         {
             ServiceCollection services = new ServiceCollection();
-
             services.AddSingleton<DbManager>();
             services.AddSingleton<IDoors, DoorsService>();
             services.AddSingleton<ICheck, CheckService>();
@@ -34,7 +34,9 @@ namespace Dal
             services.AddSingleton<ICustomers, CustomersService>();
             services.AddSingleton<IDoorsFrames, DoorsFramesService>();
             services.AddSingleton<IOrderItems, OrderItemsService>();
-            ServiceProvider servicesProvider = services.BuildServiceProvider();
+            services.AddSingleton<IEmployee, EmployeesService>();
+            ServiceProvider servicesProvider = services.BuildServiceProvider();    
+            employees = servicesProvider.GetRequiredService<IEmployee>();
             doors = servicesProvider.GetRequiredService<IDoors>();
             customers = servicesProvider.GetRequiredService<ICustomers>();
             orders = servicesProvider.GetRequiredService<IOrders>();

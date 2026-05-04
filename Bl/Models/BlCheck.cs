@@ -4,7 +4,7 @@ using Dal.Models;
 
 namespace Bl.Models;
 
-public  class BlCheck
+public class BlCheck
 {
 
     //public int Id { get; set; }

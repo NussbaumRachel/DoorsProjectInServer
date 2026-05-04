@@ -11,7 +11,13 @@ public partial class Order
 
     public string? CustName { get; set; }
 
-    public DateOnly? DeliveryDate { get; set; }
+    public DateTime? DeliveryDate { get; set; }
+
+    public DateTime? OrderDate { get; set; }
+
+    public DateTime? UpdateDate { get; set; }
+
+    public string? EmployeeId { get; set; }
 
     public string? Street { get; set; }
 

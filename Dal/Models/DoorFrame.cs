@@ -23,7 +23,7 @@ public partial class DoorFrame
 
     public string? Perforation { get; set; }
 
-    public string? Opening { get; set; } = "lkk";
+    public string? Opening { get; set; }
 
     public int? FramesHeightWithShutter { get; set; }
 
@@ -32,6 +32,4 @@ public partial class DoorFrame
     public string? Color { get; set; }
 
     public string? Notes { get; set; }
-
- 
 }

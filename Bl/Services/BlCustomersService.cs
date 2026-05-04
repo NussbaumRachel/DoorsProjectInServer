@@ -17,10 +17,13 @@ namespace Bl.Services
         {
             this.Dal = dal;
         }
-        public void Create(BlCustomer item)
+        public async Task<bool> Create(BlCustomer item)
         {
-            throw new NotImplementedException();
+           
+            return await Dal.customers.Create(convertFromBlCustomerToDalCustomer(item));
+           
         }
+      
 
         public bool Delete(BlCustomer item)
         {
@@ -46,21 +49,44 @@ namespace Bl.Services
         }
         public BlCustomer convertFromDalCustomerToBlCustomer(Customer c)
         {
-            BlCustomer newCust = new BlCustomer();
-            newCust.Id = c.Id;
-            newCust.Name = c.Name;
-            newCust.Notes = c.Notes;
-            newCust.Address = c.Address;
-            newCust.Cn = c.Cn;
-            newCust.Phone = c.Phone;
-            newCust.Email = c.Email;
-            newCust.ContactPersonName = c.ContactPersonName;
-            newCust.ContactPersonPhone = c.ContactPersonPhone;
-            newCust.Status = c.Status;
+            BlCustomer newCust = new BlCustomer()
+            {
+            Id = c.Id,
+            Name = c.Name,
+            Notes = c.Notes,
+            Address = c.Address,
+            Cn = c.Cn,
+            Phone = c.Phone,
+            Email = c.Email,
+            ContactPersonName = c.ContactPersonName,
+            ContactPersonPhone = c.ContactPersonPhone,
+            Status = c.Status
+            };
             return newCust;
 
         }
+        public Customer convertFromBlCustomerToDalCustomer(BlCustomer c)
+        {
+            Customer newCust = new Customer() { 
+            Id = c.Id,
+            Name = c.Name,
+            Notes = c.Notes,
+            Address = c.Address,
+            Cn = c.Cn,
+            Phone = c.Phone,
+            Email = c.Email,
+            ContactPersonName = c.ContactPersonName,
+            ContactPersonPhone = c.ContactPersonPhone,
+            Status = c.Status
+            };
+            return newCust;
+        }
         public void Update(BlCustomer item)
+        {
+            throw new NotImplementedException();
+        }
+
+        void Api.ICrud<BlCustomer>.Create(BlCustomer item)
         {
             throw new NotImplementedException();
         }

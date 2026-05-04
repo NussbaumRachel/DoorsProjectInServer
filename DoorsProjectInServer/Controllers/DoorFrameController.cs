@@ -10,7 +10,7 @@ namespace DoorsProjectInServer.Controllers
     public class DoorFrameController : Controller
     {
         IBl bl;
-        public DoorFrameController (IBl bl)
+        public DoorFrameController(IBl bl)
         {
             this.bl = bl;
         }

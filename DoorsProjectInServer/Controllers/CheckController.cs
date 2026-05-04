@@ -10,13 +10,13 @@ namespace DoorsProjectInServer.Controllers
 
     public class CheckController : Controller
     {
-        
-       IBl Bl;
-       public CheckController (IBl bl)
+
+        IBl Bl;
+        public CheckController(IBl bl)
         {
-            Bl = bl; 
+            Bl = bl;
         }
-       
+
         [HttpGet]
         [Route("GetAll")]
         public Task<List<BlCheck>> getAllChecks()
@@ -38,16 +38,16 @@ namespace DoorsProjectInServer.Controllers
         [Route("Add")]
         public Boolean AddCheck(BlCheck newCheck)
         {
-            
-            Bl.checks.Create(newCheck);       
+
+            Bl.checks.Create(newCheck);
             return true;
         }
         [HttpDelete]
         [Route("delete")]
         public async Task<Boolean> deleteCheck(BlCheck NewCheck)
         {
-          return Bl.checks.Delete(NewCheck);
-             
+            return Bl.checks.Delete(NewCheck);
+
         }
 
         [HttpDelete]
@@ -57,8 +57,8 @@ namespace DoorsProjectInServer.Controllers
             return Bl.checks.DeleteById(id);
 
         }
-       
+
 
     }
-    
+
 }

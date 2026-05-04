@@ -14,6 +14,7 @@ namespace Bl.Api
         public IBlCustomers customers { get; }
         public IBlDoors doors { get; }
         public IBlDoorsFrames doorsFrames { get; }
+        public IBlEmployees employees { get; }
 
         public IBlOrderItems orderItems { get; }
     }

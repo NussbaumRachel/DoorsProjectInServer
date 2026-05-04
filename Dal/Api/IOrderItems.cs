@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dal.Api
 {
-    public interface IOrderItems:ICrud<OrderItem>
+    public interface IOrderItems : ICrud<OrderItem>
     {
         public Task<List<OrderItem>> getByOrderId(int ordId);
     }

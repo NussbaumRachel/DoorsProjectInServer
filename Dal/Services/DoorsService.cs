@@ -8,8 +8,8 @@ using Dal.Models;
 
 namespace Dal.Services
 {
-    public class DoorsService: IDoors
-        
+    public class DoorsService : IDoors
+
     {
         DbManager db;
         public DoorsService(DbManager db)
@@ -35,7 +35,8 @@ namespace Dal.Services
             }
         }
         public void Update(Door item) { }
-        public bool Delete(Door item) {
+        public bool Delete(Door item)
+        {
             try
             {
                 var d = GetAll().Result.Find(d => d.Id == item.Id);
@@ -50,20 +51,20 @@ namespace Dal.Services
         }
         public async Task<bool> Delete(int id)
         {
-           
-                var ch = GetAll().Result.Find(c => c.Id == id);
-                try
-                {
-                    db.Doors.Remove(ch);
-                    db.SaveChanges();
-                    return true;
-                }
-                catch
-                {
-                    throw new ArgumentNullException("לא נמצאה הדלת המתאימה");
-                
+
+            var ch = GetAll().Result.Find(c => c.Id == id);
+            try
+            {
+                db.Doors.Remove(ch);
+                db.SaveChanges();
+                return true;
             }
-           
+            catch
+            {
+                throw new ArgumentNullException("לא נמצאה הדלת המתאימה");
+
+            }
+
         }
         public void DeleteAll() { }
         public async Task<Door> Get(int id)
@@ -77,7 +78,7 @@ namespace Dal.Services
                 throw new ArgumentNullException("not found!");
             }
         }
-        public async Task<List<Door>> GetAll() => db.Doors.ToList(); 
+        public async Task<List<Door>> GetAll() => db.Doors.ToList();
 
         void ICrud<Door>.Create(Door item)
         {

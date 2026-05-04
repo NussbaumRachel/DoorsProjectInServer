@@ -19,12 +19,12 @@ namespace Bl.Services
         }
         public void Create(BlCheck item)
         {
-          Dal.checks.Create(convertFromBlChecksToDalChecks(item));
+            Dal.checks.Create(convertFromBlChecksToDalChecks(item));
         }
 
-        public  bool Delete(BlCheck item)
+        public bool Delete(BlCheck item)
         {
-        Dal.checks.Delete(convertFromBlChecksToDalChecks(item));return true;
+            Dal.checks.Delete(convertFromBlChecksToDalChecks(item)); return true;
         }
         public bool DeleteById(int id)
         {
@@ -37,10 +37,10 @@ namespace Bl.Services
 
         public BlCheck Get(int id)
         {
-            return convertFromDalChecksToBlChecks(Dal.checks.Get(id).Result) ;
+            return convertFromDalChecksToBlChecks(Dal.checks.Get(id).Result);
         }
 
-               public async Task<List<BlCheck>> GetAll()
+        public async Task<List<BlCheck>> GetAll()
         {
             List<BlCheck> blCheckList = new List<BlCheck>();
 
@@ -61,24 +61,25 @@ namespace Bl.Services
             }
             foreach (var property in propertiesFrames)
             {
-                if(propertiesDoors.FirstOrDefault(p => p.Name == property.Name) == null)
+                if (propertiesDoors.FirstOrDefault(p => p.Name == property.Name) == null)
                 {
                     var propertyName = property.Name.ToString();
                     propertyName = propertyName.Replace("k__BackingField", "");
                     propertyName = char.ToLower(propertyName[0]) + propertyName.Substring(1);
                     properties[i++] = propertyName;
                 }
-                    
+
             }
             // עבור כל מאפיין ב-BlDoor
             foreach (var property in properties)
             {
-                if(property != null) { 
-                // בודק אם המאפיין אינו קשור ל-backfield (k__BackingField)
-                
+                if (property != null)
+                {
+                    // בודק אם המאפיין אינו קשור ל-backfield (k__BackingField)
+
                     // משיג את כל הערכים המוגבלים עבור מאפיין זה מתוך DAL
                     var allChecks = await Dal.checks.GetAll();
-                   
+
                     var blCheck = new BlCheck
                     {
                         //Id = 0,
@@ -103,7 +104,7 @@ namespace Bl.Services
             Dal.checks.GetAll().Result.FindAll(c => c.Key == key).ForEach(c => l.Add(convertFromDalChecksToBlChecks(c)));
             return l;
         }
-        
+
         public BlCheck convertFromDalChecksToBlChecks(Check c)
         {
             BlCheck newblCheck = new BlCheck()
@@ -123,7 +124,7 @@ namespace Bl.Services
             newCheck.Value = c.Values[0].Value;
             return newCheck;
         }
-        public Check convertFromBlChecksToDalChecks(BlCheck c,int ind)
+        public Check convertFromBlChecksToDalChecks(BlCheck c, int ind)
         {
             Check newCheck = new Check();
             //newCheck.Id = c.Id;

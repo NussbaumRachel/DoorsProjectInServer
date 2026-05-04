@@ -10,7 +10,7 @@ namespace Bl.Api
     public interface IBlDoors : ICrud<BlDoor>
     {
         public BlDoor Get(int id);
-        public  Task<int>   Create(BlDoor item);//****
+        public Task<int> Create(BlDoor item);//****
         public bool Delete(int id);
 
 

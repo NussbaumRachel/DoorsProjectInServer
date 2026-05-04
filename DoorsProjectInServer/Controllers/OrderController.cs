@@ -12,7 +12,7 @@ namespace DoorsProjectInServer.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        IBl  Bl;
+        IBl Bl;
 
         public OrderController(IBl bl)
         {

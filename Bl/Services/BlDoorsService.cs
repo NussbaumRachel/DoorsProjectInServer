@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 namespace Bl.Services
 {
     public class BlDoorsService
-        :IBlDoors
+        : IBlDoors
     {
         IDal Dal;
         public BlDoorsService(IDal Dal)
         {
             this.Dal = Dal;
         }
-         public async Task<int> Create(BlDoor item)
+        public async Task<int> Create(BlDoor item)
         {
             var allDoors = await Dal.doors.GetAll();
 
@@ -45,16 +45,16 @@ namespace Bl.Services
 
         public BlDoor Get(int id)
         {
-            return convertFromDalDoorToBldoor(Dal.doors.Get(id).Result); 
+            return convertFromDalDoorToBldoor(Dal.doors.Get(id).Result);
         }
 
         public async Task<List<BlDoor>> GetAll()
         {
             List<BlDoor> l = new List<BlDoor>();
-            Dal.doors.GetAll().Result.ForEach(d => l.Add(convertFromDalDoorToBldoor(d)));  
+            Dal.doors.GetAll().Result.ForEach(d => l.Add(convertFromDalDoorToBldoor(d)));
             return l;
         }
- 
+
         public BlDoor convertFromDalDoorToBldoor(Door c)
         {
             BlDoor newDoor = new BlDoor();

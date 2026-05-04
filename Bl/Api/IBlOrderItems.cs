@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bl.Api
 {
-    public interface IBlOrderItems:ICrud<BlOrderItem>
+    public interface IBlOrderItems : ICrud<BlOrderItem>
     {
         public void Create(BlOrderItem item, int orderId);
         public BlOrderItem convertFromDalOrderItemToBlOrderItem(OrderItem oi);

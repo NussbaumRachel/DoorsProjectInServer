@@ -11,7 +11,7 @@ namespace Bl.Api
         public void Create(T item);
         public void Update(T item);
         public bool Delete(T item);
-        public void DeleteAll();       
+        public void DeleteAll();
         public Task<List<T>> GetAll();
     }
 }

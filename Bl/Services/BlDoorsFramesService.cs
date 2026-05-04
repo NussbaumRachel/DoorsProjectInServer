@@ -29,7 +29,7 @@ namespace Bl.Services
 
             return df.Id;
         }
-                public bool Delete(BlDoorFrame item)
+        public bool Delete(BlDoorFrame item)
         {
             throw new NotImplementedException();
         }
@@ -41,7 +41,7 @@ namespace Bl.Services
 
         public BlDoorFrame Get(int id)
         {
-            return convertFromDalDoorFrameToBlDoorFrame(Dal.doorFrames.Get(id).Result);  
+            return convertFromDalDoorFrameToBlDoorFrame(Dal.doorFrames.Get(id).Result);
         }
 
         public async Task<List<BlDoorFrame>> GetAll()

@@ -25,9 +25,10 @@ namespace Bl.Services
             try
             {
                 int ordId = Dal.orders.Create(convertFromBlOrderToDalOrder(item));
-                item.orderItems.ForEach(i => oi.Create(i,ordId));
+                item.orderItems.ForEach(i => oi.Create(i, ordId));
             }
-            catch {
+            catch
+            {
                 throw new NullReferenceException("item is null");
             }
         }
@@ -57,45 +58,44 @@ namespace Bl.Services
         }
         public BlOrder convertFromDalOrderToBlOrder(Order o)
         {
-            BlOrder newOrder = new BlOrder();
-            newOrder.Id = o.Id;
-            newOrder.CustId = o.CustId;
-            newOrder.Street = o.Street;
-            newOrder.ApartmentNum = o.ApartmentNum;
-            newOrder.Notes = o.Notes;
-            newOrder.CustName = o.CustName;
-            newOrder.BuildingNum = o.BuildingNum;
-            newOrder.DeliveryDate = o.DeliveryDate;
-            newOrder.Floor = o.Floor;
-            newOrder.Plot = o.Plot;
-            newOrder.Price = o.Price;
-            newOrder.Status = o.Status;
-            newOrder.orderItems = getItems(o.Id);
+            BlOrder newOrder = new BlOrder()
+            {
+                Id = o.Id,
+                CustId = o.CustId,            
+                Street = o.Street,
+                ApartmentNum = o.ApartmentNum,
+                Notes = o.Notes,
+                CustName = o.CustName,
+                EmployeeId = o.EmployeeId,
+                BuildingNum = o.BuildingNum,
+                orderItems = getItems(o.Id),
+                DeliveryDate = o.DeliveryDate,
+                Floor = o.Floor,
+                Plot = o.Plot,
+                Price = o.Price,
+                Status = o.Status,
+                UpdateDate = o.UpdateDate,
+                OrderDate = o.OrderDate
+            };                      
             return newOrder;
 
         }
         public List<BlOrderItem> getItems(int oid)
         {
-            List < BlOrderItem > l = new List < BlOrderItem >();
-             Dal.orderItems.getByOrderId(oid).Result.ForEach(Oi =>
-              l.Add(oi.convertFromDalOrderItemToBlOrderItem(Oi)));
+            List<BlOrderItem> l = new List<BlOrderItem>();
+            Dal.orderItems.getByOrderId(oid).Result.ForEach(Oi =>
+             l.Add(oi.convertFromDalOrderItemToBlOrderItem(Oi)));
             return l;
         }
         public Order convertFromBlOrderToDalOrder(BlOrder o)
         {
-            Order newOrder = new Order();
-            newOrder.Id = o.Id;
-            newOrder.CustId = o.CustId;
-            newOrder.Street = o.Street;
-            newOrder.ApartmentNum = o.ApartmentNum;
-            newOrder.Notes = o.Notes;
-            newOrder.CustName = o.CustName;
-            newOrder.BuildingNum = o.BuildingNum;
-            newOrder.DeliveryDate = o.DeliveryDate;
-            newOrder.Floor = o.Floor;
-            newOrder.Plot = o.Plot;
-            newOrder.Price = o.Price;
-            newOrder.Status = o.Status;
+            Order newOrder = new Order() {Id = o.Id,CustId = o.CustId 
+            ,Street = o.Street,ApartmentNum = o.ApartmentNum,Notes = o.Notes,
+            CustName = o.CustName,EmployeeId = o.EmployeeId,BuildingNum = o.BuildingNum
+            ,DeliveryDate = o.DeliveryDate,Floor = o.Floor,Plot = o.Plot,Price = o.Price,Status = o.Status,
+                UpdateDate = o.UpdateDate,
+                OrderDate = o.OrderDate
+            };
             return newOrder;
         }
 

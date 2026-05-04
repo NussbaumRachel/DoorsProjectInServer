@@ -49,7 +49,7 @@ public class BlDoor
 
     public string? TextFileForTheMachine { get; set; }
 
-    
+
     public bool Equals(BlDoor d)
     {
         return Side.Equals(d.Side) &&
@@ -70,7 +70,7 @@ public class BlDoor
             InternalLayoutWidth.Equals(d.InternalLayoutWidth) &&
             InternalLayoutLength.Equals(d.InternalLayoutLength) &&
             ExternalLayoutWidth.Equals(d.ExternalLayoutWidth) &&
-            ExternalLayoutLength.Equals(d.ExternalLayoutLength) ;
-                    
+            ExternalLayoutLength.Equals(d.ExternalLayoutLength);
+
     }
 }

@@ -21,7 +21,9 @@ public partial class DbManager : DbContext
 
     public virtual DbSet<Door> Doors { get; set; }
 
-    public virtual DbSet<DoorFrame> DoorFramesTables { get; set; }
+    public virtual DbSet<DoorFrame> DoorFrames { get; set; }
+
+    public virtual DbSet<Employee> Employees { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
 
@@ -121,11 +123,11 @@ public partial class DbManager : DbContext
 
         modelBuilder.Entity<DoorFrame>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC07981BA50F");
+            entity.HasKey(e => e.Id).HasName("PK__DoorFram__3214EC07E5F5871A");
 
-            entity.ToTable("DoorFrames_table");
+            entity.ToTable("DoorFrame");
 
-            entity.HasIndex(e => e.Id, "UQ__tmp_ms_x__3214EC06E5D9C684").IsUnique();
+            entity.HasIndex(e => e.Id, "UQ__DoorFram__3214EC0638DC4EED").IsUnique();
 
             entity.Property(e => e.Color)
                 .HasMaxLength(20)
@@ -153,17 +155,41 @@ public partial class DbManager : DbContext
             entity.Property(e => e.WallFrameThickness).HasColumnName("Wall_frame_thickness");
         });
 
+        modelBuilder.Entity<Employee>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Employee__3214EC07D25989EF");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Address).UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.Email).UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.Name).UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.Password)
+                .HasMaxLength(50)
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.Phone1)
+                .HasMaxLength(50)
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.Phone2)
+                .HasMaxLength(50)
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+        });
+
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Orders__3214EC074BFBDBE7");
+            entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC0741688843");
 
             entity.Property(e => e.ApartmentNum).HasColumnName("Apartment_num");
             entity.Property(e => e.BuildingNum).HasColumnName("Building_num");
             entity.Property(e => e.CustId).UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.CustName).UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.DeliveryDate).HasColumnName("Delivery_date");
+            entity.Property(e => e.EmployeeId).UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Floor).HasColumnName("Floor ");
             entity.Property(e => e.Notes).UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.OrderDate).HasColumnName("Order_date");
             entity.Property(e => e.Plot)
                 .HasMaxLength(50)
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
@@ -171,6 +197,7 @@ public partial class DbManager : DbContext
             entity.Property(e => e.Street)
                 .HasMaxLength(50)
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.UpdateDate).HasColumnName("Update_date");
         });
 
         modelBuilder.Entity<OrderItem>(entity =>
@@ -180,7 +207,7 @@ public partial class DbManager : DbContext
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__OrderItem__Order__05D8E0BE");
+                .HasConstraintName("FK__OrderItem__Order__18EBB532");
         });
 
         OnModelCreatingPartial(modelBuilder);

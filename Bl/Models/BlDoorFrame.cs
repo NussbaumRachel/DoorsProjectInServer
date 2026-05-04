@@ -34,7 +34,7 @@ public class BlDoorFrame
     public string? Notes { get; set; }
     public bool Equals(BlDoorFrame d)
     {
-        
+
         return Side.Equals(d.Side) &&
             Width.Equals(d.Width) &&
             Height.Equals(d.Height) &&
