@@ -1,5 +1,6 @@
 ﻿using Bl.Api;
 using Bl.Models;
+using Dal.Api;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DoorsProjectInServer.Controllers
@@ -32,6 +33,27 @@ namespace DoorsProjectInServer.Controllers
         {
             return bl.doors.Delete(id);
 
+        }
+     
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> UpdateDoor(BlDoor door)
+        {
+            var id = await bl.doors.UpdateDoorAsync(door);
+            return Ok(new { id });
+        }
+        [HttpPost("UploadDoorFile/{doorId}")]
+        public async Task<IActionResult> UploadDoorFile(int doorId, IFormFile file)
+        {
+            try
+            {
+                var path = await bl.doors.UploadDoorFileAsync(doorId, file);
+                return Ok(new { message = "הקובץ הועלה בהצלחה", path });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "שגיאה בהעלאת הקובץ: " + ex.Message });
+            }
         }
     }
 }

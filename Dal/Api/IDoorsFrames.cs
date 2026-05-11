@@ -14,6 +14,7 @@ namespace Dal.Api
         public void DeleteAll();
         public int Create(DoorFrame item);
         public Task<bool> Delete(int id);
+        public  Task UpdateAsync(DoorFrame item);
 
 
     }

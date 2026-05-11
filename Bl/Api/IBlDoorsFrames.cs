@@ -12,7 +12,7 @@ namespace Bl.Api
         public BlDoorFrame Get(int id);
         public Task<int> Create(BlDoorFrame item);
         public bool Delete(int id);
-
+        public Task<int> UpdateDoorAsync(BlDoorFrame item);
 
     }
 }

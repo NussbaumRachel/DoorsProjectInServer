@@ -70,7 +70,10 @@ namespace Dal.Services
 
 
 
-
+        public Task<bool> ExistsItemInOrders(int itemId)
+        {
+            return dbManager.OrderItems.AnyAsync(o => o.ItemId == itemId);
+        }
         public void Update(OrderItem item)
         {
             throw new NotImplementedException();

@@ -31,5 +31,5 @@ public partial class DoorFrame
 
     public string? Color { get; set; }
 
-    public string? Notes { get; set; }
+    public string? Notes { get; set; } = "ppp";
 }

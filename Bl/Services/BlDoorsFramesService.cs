@@ -1,5 +1,6 @@
 ﻿using Bl.Api;
 using Bl.Models;
+using Dal;
 using Dal.Api;
 using Dal.Models;
 using System;
@@ -82,7 +83,7 @@ namespace Bl.Services
             newDf.Height = df.Height;
             newDf.Width = df.Width;
             newDf.Hinges = df.Hinges;
-            newDf.Id = df.Id;
+            //newDf.Id = df.Id;
             newDf.Side = df.Side;
             newDf.Notes = df.Notes;
             newDf.Perforation = df.Perforation;
@@ -93,6 +94,32 @@ namespace Bl.Services
         public void Update(BlDoorFrame item)
         {
             throw new NotImplementedException();
+        }
+        public async Task<int> UpdateDoorAsync(BlDoorFrame item)
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+
+            var dalDoorFrame = convertFromBlDoorFrameToDalDoorFrame(item);
+
+            var isUsed = await IsDoorFrameInUse(item.Id);
+
+            if (isUsed)
+            {
+                // 🔥 יוצרים חדשה
+                return Dal.doorFrames.Create(dalDoorFrame);
+            }
+            else
+            {
+                // 🔥 עדכון רגיל
+                dalDoorFrame.Id = item.Id;
+                await Dal.doorFrames.UpdateAsync(dalDoorFrame);
+                return dalDoorFrame.Id;
+            }
+        }
+        public async Task<bool> IsDoorFrameInUse(int frameId)
+        {
+            return await Dal.orderItems.ExistsItemInOrders(frameId);
         }
         public bool Delete(int id)
         {

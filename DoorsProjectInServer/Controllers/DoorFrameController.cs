@@ -33,5 +33,12 @@ namespace DoorsProjectInServer.Controllers
         {
             return bl.doorsFrames.Delete(id);
         }
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> UpdateDoorFrame(BlDoorFrame doorFrame)
+        {
+            var id = await bl.doorsFrames.UpdateDoorAsync(doorFrame);
+            return Ok(new { id });
+        }
     }
 }

@@ -1,0 +1,19 @@
+
+&#9733; <!-- ★ -->  קוד לכוכב מלא
+&#9734; <!-- ☆ -->   קוד לכוכב ריק
+
+כך שמים אותו בין התגיות:
+<span class="star">&#9733;</span> 
+<span class="star">&#9734;</span> 
+
+
+אני בקוד שניסיתי כתבתי כך:
+
+שלחתי לפונקציה את האינדקס, אתן לא צריכות אלא יש ר מעדכנות את הסטטוס בהתאם
+<div>  
+  <span class="star"  [style.color]="'gold'" title="start" (click)="starEvent($index,'start')">&#9733;</span>
+  <span class="star"  [style.color]="s.status === 'middle' || s.status === 'finish' ? 'gold' : 'gray'" title="middle" (click)="starEvent($index,'middle')">&#9733;</span>
+  <span class="star"  [style.color]="s.status === 'finish' ? 'gold' : 'gray'" title="finish" (click)="starEvent($index,'finish')">&#9733;</span>
+</div>
+
+
