@@ -27,6 +27,7 @@ namespace Dal
         public DalManager()
         {
             ServiceCollection services = new ServiceCollection();
+   
             services.AddSingleton<DbManager>();
             services.AddSingleton<IDoors, DoorsService>();
             services.AddSingleton<ICheck, CheckService>();

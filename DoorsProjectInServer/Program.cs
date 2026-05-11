@@ -2,6 +2,8 @@ using Bl;
 using Bl.Api;
 using Dal;
 using Dal.Api;
+using Dal.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DoorsProjectInServer
 {
@@ -15,6 +17,8 @@ namespace DoorsProjectInServer
 
             builder.Services.AddControllers();
             //Learn more about configuring Swagger / OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddDbContext<DbManager>();
+            builder.Services.AddScoped<ExcelService>();
             builder.Services.AddSingleton<IBl, BlManager>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
