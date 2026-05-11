@@ -7,8 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Bl.Services
+
 {
     public class BlDoorsService
         : IBlDoors
@@ -24,10 +26,11 @@ namespace Bl.Services
 
             Door d = allDoors.Find(d => convertFromDalDoorToBldoor(d).Equals(item));
 
-            if (d == null)
-                return Dal.doors.Create(convertFromBlDoorToDaldoor(item));
+            if (d == null) {
+                 return Dal.doors.Create(convertFromBlDoorToDaldoor(item));
 
-            return d.Id;
+            }
+                            return d.Id;
         }
 
         public bool Delete(BlDoor item)
@@ -109,12 +112,56 @@ namespace Bl.Services
             newDoor.Type = c.Type;
             return newDoor;
         }
-        public void Update(BlDoor item)
+        public async Task<int> UpdateDoorAsync(BlDoor item)
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+
+            var dalDoor = convertFromBlDoorToDaldoor(item);
+
+            var isUsed = await IsDoorInUse(item.Id);
+
+            if (isUsed)
+            {
+                // 🔥 יוצרים חדשה
+                return Dal.doors.Create(dalDoor);
+            }
+            else
+            {
+                // 🔥 עדכון רגיל
+                dalDoor.Id = item.Id;
+                await Dal.doors.UpdateAsync(dalDoor);
+                return dalDoor.Id;
+            }
+        }
+        public async Task<bool> IsDoorInUse(int doorId)
+        {
+            return await Dal.orderItems.ExistsItemInOrders(doorId);
+        }
+        public async Task<string> UploadDoorFileAsync(int doorId, IFormFile file)
+        {
+            if (file == null)
+                throw new ArgumentException("לא נבחר קובץ");
+
+            // שמירה פיזית של הקובץ
+            var filePath = await Dal.doors.SaveDoorFileAsync(doorId, file);
+
+            // עדכון הדלת במאגר
+            await Dal.doors.UpdateDoorFilePathAsync(doorId, filePath);
+
+            return filePath;
+        }
+        void Api.ICrud<BlDoor>.Create(BlDoor item)
         {
             throw new NotImplementedException();
         }
 
-        void Api.ICrud<BlDoor>.Create(BlDoor item)
+        void Api.ICrud<BlDoor>.Update(BlDoor item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update(BlDoor item)
         {
             throw new NotImplementedException();
         }

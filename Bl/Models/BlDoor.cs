@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 
 namespace Bl.Models;
@@ -47,7 +48,7 @@ public class BlDoor
 
     public string? Notes { get; set; }
 
-    public string? TextFileForTheMachine { get; set; }
+    public String? TextFileForTheMachine { get; set; }
 
 
     public bool Equals(BlDoor d)

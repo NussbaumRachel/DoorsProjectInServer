@@ -1,5 +1,6 @@
 ﻿using Dal.Api;
 using Dal.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,37 @@ namespace Dal.Services
             catch
             {
                 throw new Exception("המסגרת/משקוף שנסית להכניס אינו/ה תקין/נה");
+            }
+        }
+        public async Task UpdateAsync(DoorFrame item)
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+
+            await using var transaction = await db.Database.BeginTransactionAsync();
+
+            try
+            {
+                var existingDoorFrame = await db.DoorFrames
+                    .FirstOrDefaultAsync(d => d.Id == item.Id);
+
+                if (existingDoorFrame == null)
+                    throw new Exception("המשקוף לא נמצא");
+
+                // 🔹 עדכון חכם (EF Core mapping במקום שדה-שדה ידני)
+                db.Entry(existingDoorFrame).CurrentValues.SetValues(item);
+
+                // 🔹 אופציונלי: שמירה על שדות שלא רוצים שידרסו
+                // למשל אם יש שדות מערכת:
+                // db.Entry(existingDoor).Property(x => x.CreatedAt).IsModified = false;
+
+                await db.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw new Exception("שגיאה בעדכון המשקוף: " + ex.Message);
             }
         }
         public void Update(DoorFrame item) { }

@@ -10,6 +10,7 @@ namespace Dal.Api
     public interface IOrderItems : ICrud<OrderItem>
     {
         public Task<List<OrderItem>> getByOrderId(int ordId);
+        public Task<bool> ExistsItemInOrders(int itemId);
         public Task<bool> Delete(OrderItem item);
 
     }
