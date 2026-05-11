@@ -1,10 +1,15 @@
-﻿using Dal.Api;
+﻿using Bl.Api;
+using Bl.Models;
+// Add the following using directive:
+using Dal; // <-- Add this line if AppDbContext is in the Dal namespace
+using Dal.Api;
+using Dal.Models;
+using Dal.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-//using Dal.Models;
-using Dal.Services;
-using Bl.Api;
-using Bl.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
+/////////////////המיורקים - excel////////////////////
 
 namespace DoorsProjectInServer.Controllers
 {
@@ -13,9 +18,15 @@ namespace DoorsProjectInServer.Controllers
     public class OrderController : ControllerBase
     {
         IBl Bl;
-
-        public OrderController(IBl bl)
+        private readonly DbManager _context;
+       private readonly ExcelService _excelService;
+        public OrderController(IBl bl
+            , DbManager context
+            , ExcelService excelService
+            )
         {
+           _context = context;
+            _excelService = excelService;
             this.Bl = bl;
         }
         [HttpGet]
@@ -63,5 +74,34 @@ namespace DoorsProjectInServer.Controllers
             }
         }
 
+        ///////////////excel/////////////////////
+
+        [HttpGet("export-excel")]
+        public IActionResult ExportExcel()
+        {
+            var orders = _context.Orders.ToList();
+                
+                
+
+            var fileBytes = _excelService.GenerateOrdersExcel((List<Dal.Models.Order>)orders);
+
+            return File(
+                fileBytes,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                $"orders_{DateTime.Now:yyyyMMdd_HHmm}.xlsx"
+            );
+        }
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
