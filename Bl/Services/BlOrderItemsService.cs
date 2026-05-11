@@ -24,9 +24,9 @@ namespace Bl.Services
             Dal.orderItems.Create(convertFromBlOrderItemToDalOrderItem(item));
         }
 
-        public bool Delete(BlOrderItem item)
+        public Task<bool> Delete(BlOrderItem item)
         {
-            throw new NotImplementedException();
+            return Dal.orderItems.Delete(convertFromBlOrderItemToDalOrderItem(item));
         }
 
         public void DeleteAll()
@@ -34,9 +34,11 @@ namespace Bl.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<BlOrderItem>> GetAll()
+        public List<BlOrderItem> GetAll()
         {
-            throw new NotImplementedException();
+            List < BlOrderItem > l = new List<BlOrderItem>();
+             Dal.orderItems.GetAll().Result.ForEach(oi => l.Add(convertFromDalOrderItemToBlOrderItem(oi)));
+            return l;
         }
 
         public void Update(BlOrderItem item)
@@ -66,6 +68,16 @@ namespace Bl.Services
         }
 
         public void Create(BlOrderItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool Api.ICrud<BlOrderItem>.Delete(BlOrderItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<BlOrderItem>> Api.ICrud<BlOrderItem>.GetAll()
         {
             throw new NotImplementedException();
         }

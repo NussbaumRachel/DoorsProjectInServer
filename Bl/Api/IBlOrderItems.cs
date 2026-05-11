@@ -13,6 +13,9 @@ namespace Bl.Api
         public void Create(BlOrderItem item, int orderId);
         public BlOrderItem convertFromDalOrderItemToBlOrderItem(OrderItem oi);
         public OrderItem convertFromBlOrderItemToDalOrderItem(BlOrderItem oi);
+        public Task<bool> Delete(BlOrderItem item);
+        public List<BlOrderItem> GetAll();
+
 
     }
 }
