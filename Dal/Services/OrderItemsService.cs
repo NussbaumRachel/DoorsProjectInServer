@@ -34,11 +34,14 @@ namespace Dal.Services
             }
         }
 
-        public bool Delete(OrderItem item)
+        public async Task<bool> Delete(OrderItem item)
         {
+
+            OrderItem oi = GetAll().Result.Find(o => o.Id == item.Id);
             try
             {
-                dbManager.OrderItems.Remove(item);
+                Console.WriteLine("item", item,"orwderItem", oi);
+                dbManager.OrderItems.Remove(oi);
                 dbManager.SaveChanges();
                 return true;
             }
@@ -72,6 +75,11 @@ namespace Dal.Services
 
 
         public void Update(OrderItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool ICrud<OrderItem>.Delete(OrderItem item)
         {
             throw new NotImplementedException();
         }
