@@ -1,9 +1,12 @@
+
 using Bl;
 using Bl.Api;
+using Bl.Services;
 using Dal;
 using Dal.Api;
-using Dal.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace DoorsProjectInServer
 {
@@ -14,7 +17,41 @@ namespace DoorsProjectInServer
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddControllers();
 
+            // ------------------------
+            // Register DAL
+            builder.Services.AddScoped<IDal, DalManager>(); // ???? ?????? ?? ???????
+
+            // Register Business Layer
+            builder.Services.AddScoped<IBlEmployees, BlEmployeesService>();
+            builder.Services.AddSingleton<IBl, BlManager>(); // ?? BlManager ?? ???? ?-IDal, Singleton ?????
+
+            // JWT Service
+            builder.Services.AddScoped<JwtService>();
+
+            // Configure JWT Authentication
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
+                        )
+                    };
+                });
+
+            // Authorization
+            builder.Services.AddAuthorization();
+
+            // Swagger
             builder.Services.AddControllers();
             //Learn more about configuring Swagger / OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddDbContext<DbManager>();
@@ -22,12 +59,15 @@ namespace DoorsProjectInServer
             builder.Services.AddSingleton<IBl, BlManager>();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+
+            // CORS
+            builder.Services.AddCors(o => o.AddPolicy("MyPolicy", policy =>
             {
-                builder.WithOrigins("http://localhost:3000")
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
+                policy.WithOrigins("http://localhost:3000")
+                      .AllowAnyMethod()
+                      .AllowAnyHeader();
             }));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -39,7 +79,11 @@ namespace DoorsProjectInServer
 
             app.UseHttpsRedirection();
 
+            // Enable authentication & authorization
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            // Enable CORS
             app.UseCors("MyPolicy");
 
             app.MapControllers();

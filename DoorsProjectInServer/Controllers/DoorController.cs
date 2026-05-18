@@ -29,7 +29,7 @@ namespace DoorsProjectInServer.Controllers
         }
         [HttpDelete]
         [Route("Delete")]
-        public async Task<Boolean> deleteDoor(int id)
+        public Task<bool> deleteDoor(int id)
         {
             return bl.doors.Delete(id);
 

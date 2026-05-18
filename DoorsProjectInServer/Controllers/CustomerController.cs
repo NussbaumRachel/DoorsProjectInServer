@@ -1,6 +1,7 @@
 ﻿using Bl.Api;
 using Bl.Models;
 using Dal.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DoorsProjectInServer.Controllers
@@ -22,6 +23,7 @@ namespace DoorsProjectInServer.Controllers
         {
             return Bl.customers.GetAll();
         }
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         [Route("Add")]
         public  async Task<bool> AddCustomer(BlCustomer newCustomer)
@@ -29,12 +31,6 @@ namespace DoorsProjectInServer.Controllers
             return await Bl.customers.Create(newCustomer);
              
         }
-        //[HttpDelete]
-        //[Route("Delete")]
-        //public async Task<Boolean> deleteCustomer(int id)
-        //{
-        //    return Bl.customers.Delete(id);
-
-        //}
+       
     }
 }

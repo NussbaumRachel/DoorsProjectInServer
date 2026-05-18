@@ -11,6 +11,8 @@ namespace Dal.Api
     {
         public Task<Employee> Get(String pass);
         public bool Create(Employee item);
+        public Task UpdateAsync(Employee item);
+        public Task<bool> Delete(int id);
 
 
     }

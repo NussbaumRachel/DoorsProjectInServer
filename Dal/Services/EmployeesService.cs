@@ -1,5 +1,6 @@
 ﻿using Dal.Api;
 using Dal.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,37 @@ namespace Dal.Services
                 throw new Exception("הלקוח שנסית להכניס אינו תקין");
             }
         }
+        public async Task UpdateAsync(Employee item)
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
 
+            await using var transaction = await db.Database.BeginTransactionAsync();
+
+            try
+            {
+                var existingEmployee = await db.Employees
+                    .FirstOrDefaultAsync(d => d.Id == item.Id);
+
+                if (existingEmployee == null)
+                    throw new Exception("הדלת לא נמצאה");
+
+                // 🔹 עדכון חכם (EF Core mapping במקום שדה-שדה ידני)
+                db.Entry(existingEmployee).CurrentValues.SetValues(item);
+
+                // 🔹 אופציונלי: שמירה על שדות שלא רוצים שידרסו
+                // למשל אם יש שדות מערכת:
+                // db.Entry(existingDoor).Property(x => x.CreatedAt).IsModified = false;
+
+                await db.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw new Exception("שגיאה בעדכון העובד: " + ex.Message);
+            }
+        }
         public bool Delete(Employee item)
         {
             try
@@ -50,7 +81,24 @@ namespace Dal.Services
         }
 
         public async Task<List<Employee>> GetAll() => db.Employees.ToList();
+        public async Task<bool> Delete(int id)
+        {
 
+            var ch = GetAll().Result.Find(c => c.Id == id);
+            try
+            {
+                db.Employees.Remove(ch);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                throw new ArgumentNullException("לא נמצאה העובד המתאים");
+
+            }
+
+        }
+      
         public async Task<Employee> Get(String pass)
         {
             try

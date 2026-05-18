@@ -27,5 +27,18 @@ namespace DoorsProjectInServer.Controllers
 
             return bl.employees.Create(newEmployee);
         }
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> UpdateEmp(BlEmployee emp)
+        {
+            var id = await bl.employees.UpdateEmployeeAsync(emp);
+            return Ok(new { id });
+        }
+        [HttpDelete]
+        [Route("Delete")]
+        public Task<bool> deleteEmp(int id)
+        {
+            return bl.employees.Delete(id);
+        }
     }
 }

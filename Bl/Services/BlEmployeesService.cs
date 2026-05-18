@@ -31,7 +31,29 @@ namespace Bl.Services
             return  Dal.employees.Create(convertFromBlEmpToDalEmp(item));
 
         }
+        public Task<bool> Delete(int id)
+        {
+            return Dal.employees.Delete(id);
+        }
+        public async Task<int> UpdateEmployeeAsync(BlEmployee item)
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
 
+            var dalEmp = convertFromBlEmpToDalEmp(item);
+                await Dal.employees.UpdateAsync(dalEmp);
+                return dalEmp.Id;
+            
+        }
+        public async Task<BlEmployee> Login(string name, string password)
+        {
+            var user = await Dal.employees.Get(password);
+
+            if (user == null)
+                return null;
+
+            return convertFromDalEmpToBlEmp(user);
+        }
         public bool Delete(BlEmployee item)
         {
             throw new NotImplementedException();

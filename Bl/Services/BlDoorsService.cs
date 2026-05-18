@@ -37,9 +37,9 @@ namespace Bl.Services
         {
             throw new NotImplementedException();
         }
-        public bool Delete(int id)
+        public Task<bool> Delete(int id)
         {
-            Dal.doors.Delete(id); return true;
+            return Dal.doors.Delete(id);
         }
         public void DeleteAll()
         {
