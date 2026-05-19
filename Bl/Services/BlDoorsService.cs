@@ -83,6 +83,7 @@ namespace Bl.Services
             newDoor.Side = c.Side;
             newDoor.Skylight = c.Skylight;
             newDoor.Type = c.Type;
+            newDoor.Price = c.Price;
             return newDoor;
         }
 
@@ -110,6 +111,7 @@ namespace Bl.Services
             newDoor.Side = c.Side;
             newDoor.Skylight = c.Skylight;
             newDoor.Type = c.Type;
+            newDoor.Price = c.Price;
             return newDoor;
         }
         public async Task<int> UpdateDoorAsync(BlDoor item)

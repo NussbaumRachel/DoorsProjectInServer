@@ -4,6 +4,7 @@ using Bl.Api;
 using Bl.Services;
 using Dal;
 using Dal.Api;
+using Dal.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;

@@ -68,6 +68,7 @@ namespace Bl.Services
             newDf.Opening = df.Opening;
             newDf.Perforation = df.Perforation;
             newDf.Profile = df.Profile;
+            newDf.Price = df.Price;
             return newDf;
         }
 
@@ -88,6 +89,7 @@ namespace Bl.Services
             newDf.Notes = df.Notes;
             newDf.Perforation = df.Perforation;
             newDf.Profile = df.Profile;
+            newDf.Price = df.Price;
 
             return newDf;
         }

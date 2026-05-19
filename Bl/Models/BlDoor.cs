@@ -50,6 +50,8 @@ public class BlDoor
 
     public String? TextFileForTheMachine { get; set; }
 
+    public int? Price { get; set; }
+
 
     public bool Equals(BlDoor d)
     {

@@ -48,4 +48,10 @@ public partial class Door
     public string? Notes { get; set; }
 
     public string? TextFileForTheMachine { get; set; }
+
+    public bool? StatusArchive { get; set; }
+
+    public string? ImageUrl { get; set; }
+
+    public int? Price { get; set; }
 }

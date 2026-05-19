@@ -35,5 +35,5 @@ public partial class Order
 
     public string? Status { get; set; }
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = new HashSet<OrderItem>();
+    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

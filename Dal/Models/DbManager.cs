@@ -86,6 +86,9 @@ public partial class DbManager : DbContext
             entity.Property(e => e.ExternalLayoutLength).HasColumnName("External layout length");
             entity.Property(e => e.ExternalLayoutWidth).HasColumnName("External layout width");
             entity.Property(e => e.Finishing).UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.ImageUrl)
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS")
+                .HasColumnName("ImageURL");
             entity.Property(e => e.InternalLayoutLength).HasColumnName("Internal layout length");
             entity.Property(e => e.InternalLayoutWidth).HasColumnName("Internal layout width");
             entity.Property(e => e.Leaf).UseCollation("SQL_Latin1_General_CP1_CI_AS");
@@ -115,6 +118,7 @@ public partial class DbManager : DbContext
                 .IsFixedLength()
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Skylight).UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.StatusArchive).HasDefaultValue(false);
             entity.Property(e => e.TextFileForTheMachine)
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS")
                 .HasColumnName("Text file for the machine");
@@ -135,6 +139,9 @@ public partial class DbManager : DbContext
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Desc).UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.FramesHeightWithShutter).HasColumnName("Frames height with shutter");
+            entity.Property(e => e.ImageUrl)
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS")
+                .HasColumnName("ImageURL");
             entity.Property(e => e.Notes).UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Opening)
                 .HasMaxLength(10)
@@ -152,6 +159,10 @@ public partial class DbManager : DbContext
                 .HasMaxLength(10)
                 .IsFixedLength()
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.StatusArchive).HasDefaultValue(false);
+            entity.Property(e => e.TextFileForTheMachine)
+                .UseCollation("SQL_Latin1_General_CP1_CI_AS")
+                .HasColumnName("Text file for the machine");
             entity.Property(e => e.WallFrameThickness).HasColumnName("Wall_frame_thickness");
         });
 
@@ -203,6 +214,10 @@ public partial class DbManager : DbContext
         modelBuilder.Entity<OrderItem>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC07D51337C0");
+
+            entity.Property(e => e.OrderItemDate).HasColumnName("OrderItem_Date");
+            entity.Property(e => e.Status).UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.UpdateDate).HasColumnName("Update_Date");
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.OrderId)

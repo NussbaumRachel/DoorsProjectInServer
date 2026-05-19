@@ -32,6 +32,8 @@ public class BlDoorFrame
     public string? Color { get; set; }
 
     public string? Notes { get; set; }
+    public int? Price { get; set; }
+
     public bool Equals(BlDoorFrame d)
     {
 
