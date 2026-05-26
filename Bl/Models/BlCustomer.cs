@@ -25,6 +25,9 @@ public class BlCustomer
     public string? Cn { get; set; }
 
     public string? Notes { get; set; }
+    public DateTime? CreatedAt { get; set; }
+
+    public int? EmployeeId { get; set; }
     public bool Equals(BlCustomer c)
     {
         return Id == c.Id && Name == c.Name;

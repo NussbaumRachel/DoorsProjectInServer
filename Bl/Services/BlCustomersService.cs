@@ -60,24 +60,28 @@ namespace Bl.Services
             Email = c.Email,
             ContactPersonName = c.ContactPersonName,
             ContactPersonPhone = c.ContactPersonPhone,
-            Status = c.Status
+            Status = c.Status,
+            CreatedAt = c.CreatedAt,
+                EmployeeId = c.EmployeeId
             };
             return newCust;
 
         }
         public Customer convertFromBlCustomerToDalCustomer(BlCustomer c)
         {
-            Customer newCust = new Customer() { 
-            Id = c.Id,
-            Name = c.Name,
-            Notes = c.Notes,
-            Address = c.Address,
-            Cn = c.Cn,
-            Phone = c.Phone,
-            Email = c.Email,
-            ContactPersonName = c.ContactPersonName,
-            ContactPersonPhone = c.ContactPersonPhone,
-            Status = c.Status
+            Customer newCust = new Customer() {
+                Id = c.Id,
+                Name = c.Name,
+                Notes = c.Notes,
+                Address = c.Address,
+                Cn = c.Cn,
+                Phone = c.Phone,
+                Email = c.Email,
+                ContactPersonName = c.ContactPersonName,
+                ContactPersonPhone = c.ContactPersonPhone,
+                Status = c.Status,
+            CreatedAt = c.CreatedAt,
+            EmployeeId = c.EmployeeId,
             };
             return newCust;
         }

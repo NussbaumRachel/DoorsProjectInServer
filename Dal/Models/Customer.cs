@@ -24,4 +24,10 @@ public partial class Customer
     public string? Cn { get; set; }
 
     public string? Notes { get; set; }
+
+    public DateTime? CreatedAt { get; set; }
+
+    public int? EmployeeId { get; set; }
+
+    public virtual Employee? Employee { get; set; }
 }
