@@ -16,5 +16,6 @@ namespace Bl.Api
         public Task<int> UpdateDoorAsync(BlDoor item);
         public  Task<string> UploadDoorFileAsync(int doorId, IFormFile file);
 
+
     }
 }

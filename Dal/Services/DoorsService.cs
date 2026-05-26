@@ -124,20 +124,26 @@ namespace Dal.Services
         }
         public async Task<string> SaveDoorFileAsync(int doorId, IFormFile file)
         {
-            if (file == null || file.Length == 0)
-                throw new ArgumentException("לא נבחר קובץ");
+            
 
-            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "DoorFiles");
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
-
-            var filePath = Path.Combine(folderPath, $"Door_{doorId}_{file.FileName}");
+            var filePath = createFilePath(doorId);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
 
+            return filePath;
+        }
+        public string createFilePath(int doorId)
+        {
+           
+            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "DoorFiles");
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+
+            var filePath = Path.Combine(folderPath, $"Door_{doorId}_{DateTime.Now:yyyyMMddHHmmss}.mpf");
+           
             return filePath;
         }
         public async Task UpdateDoorFilePathAsync(int doorId, string filePath)
