@@ -76,6 +76,10 @@ public partial class DbManager : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(30)
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
+            entity.HasOne(d => d.Employee).WithMany(p => p.Customers)
+                .HasForeignKey(d => d.EmployeeId)
+                .HasConstraintName("FK_Customers_ToTable");
         });
 
         modelBuilder.Entity<Door>(entity =>

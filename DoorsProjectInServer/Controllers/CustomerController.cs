@@ -23,7 +23,7 @@ namespace DoorsProjectInServer.Controllers
         {
             return Bl.customers.GetAll();
         }
-        [Authorize(Roles = "Manager")]
+        //[Authorize(Roles = "Manager")]
         [HttpPost]
         [Route("Add")]
         public  async Task<bool> AddCustomer(BlCustomer newCustomer)

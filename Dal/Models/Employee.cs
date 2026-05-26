@@ -22,4 +22,6 @@ public partial class Employee
     public string? Phone2 { get; set; }
 
     public DateTime? BirthDate { get; set; }
+
+    public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
 }
