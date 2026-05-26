@@ -1,6 +1,7 @@
 ﻿using Dal.Api;
-using Dal.Services;
 using Dal.Models;
+using Dal.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -27,8 +28,10 @@ namespace Dal
         public DalManager()
         {
             ServiceCollection services = new ServiceCollection();
-   
-            services.AddSingleton<DbManager>();
+
+            services.AddDbContext<DbManager>();
+            //services.AddDbContext<DbManager>(options =>
+            //options.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename='F:\\תיקייה כללית חדש\\שנה א תשפה\\תלמידות\\#PROJECTS\\רחלי קמינר ורחל נוסבוים.mdf';Integrated Security=True;Connect Timeout=30;Encrypt=True"));
             services.AddSingleton<IDoors, DoorsService>();
             services.AddSingleton<ICheck, CheckService>();
             services.AddSingleton<IOrders, OrdersService>();

@@ -35,11 +35,36 @@ namespace Bl.Services
 
         public bool Delete(BlDoor item)
         {
-            throw new NotImplementedException();
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+
+            // convert and ensure Id is preserved
+            var dalDoor = convertFromBlDoorToDaldoor(item);
+            dalDoor.Id = item.Id;
+            // mark as archived
+            dalDoor.StatusArchive = true;
+
+            // perform regular update (no duplication) - call DAL async method synchronously
+            Dal.doors.UpdateAsync(dalDoor).GetAwaiter().GetResult();
+            return true;
         }
-        public Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return Dal.doors.Delete(id);
+            // fetch existing DAL entity
+            var dalDoor = await Dal.doors.Get(id);
+            if (dalDoor == null)
+                return false;
+            if (string.IsNullOrWhiteSpace(dalDoor.TextFileForTheMachine))
+            {
+                return Dal.doors.Delete(id).GetAwaiter().GetResult();
+            }
+            else
+            {
+                // set archive status and perform a normal update (no duplication)
+                dalDoor.StatusArchive = true;
+            await Dal.doors.UpdateAsync(dalDoor);
+            return true;
+                 }
         }
         public void DeleteAll()
         {
@@ -84,6 +109,8 @@ namespace Bl.Services
             newDoor.Skylight = c.Skylight;
             newDoor.Type = c.Type;
             newDoor.Price = c.Price;
+            newDoor.StatusArchive = c.StatusArchive;
+            newDoor.ImageUrl = c.ImageUrl;
             return newDoor;
         }
 
@@ -112,6 +139,8 @@ namespace Bl.Services
             newDoor.Skylight = c.Skylight;
             newDoor.Type = c.Type;
             newDoor.Price = c.Price;
+            newDoor.StatusArchive = c.StatusArchive;
+            newDoor.ImageUrl = c.ImageUrl;
             return newDoor;
         }
         public async Task<int> UpdateDoorAsync(BlDoor item)

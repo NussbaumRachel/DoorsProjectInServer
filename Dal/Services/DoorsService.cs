@@ -83,35 +83,22 @@ namespace Dal.Services
         }
         public async Task<bool> Delete(int id)
         {
-
-            var ch = GetAll().Result.Find(c => c.Id == id);
             try
             {
-                db.Doors.Remove(ch);
-                db.SaveChanges();
+                // fetch entity directly from DB
+                var d = await db.Doors.FirstOrDefaultAsync(d => d.Id == id);
+                if (d == null)
+                    return false;
+                db.Doors.Remove(d);
+                await db.SaveChangesAsync();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                throw new ArgumentNullException("לא נמצאה הדלת המתאימה");
-
-            }
-
-        }
-        public async Task<bool> DeleteStatus(int id){
-            var ch = GetAll().Result.Find(c => c.Id == id);
-            try
-            {
-               //ch.
-                db.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                throw new ArgumentNullException("לא נמצאה הדלת המתאימה");
-
+                throw new Exception("שגיאה במחיקת הדלת: " + ex.Message);
             }
         }
+        
         public void DeleteAll() { }
         public async Task<Door> Get(int id)
         {

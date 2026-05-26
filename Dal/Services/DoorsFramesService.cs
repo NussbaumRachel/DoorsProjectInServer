@@ -69,36 +69,20 @@ namespace Dal.Services
         public void Update(DoorFrame item) { }
         public bool Delete(DoorFrame item)
         {
-            try
-            {
-                var df = GetAll().Result.Find(df => df.Id == item.Id);
-                db.DoorFrames.Remove(df);
-                db.SaveChanges();
-                return true;
-            }
-            catch
-            {
+            //try
+            //{
+            //    var df = GetAll().Result.Find(df => df.Id == item.Id);
+            //    db.DoorFrames.Remove(df);
+            //    db.SaveChanges();
+            //    return true;
+            //}
+            //catch
+            //{
                 throw new ArgumentNullException("לא נמצאה הדלת המתאימה");
-            }
+            //}
         }
         public void DeleteAll() { }
-        public async Task<bool> Delete(int id)
-        {
-
-            var ch = GetAll().Result.Find(c => c.Id == id);
-            try
-            {
-                db.DoorFrames.Remove(ch);
-                db.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                throw new ArgumentNullException("לא נמצאה המשקוף המתאים");
-
-            }
-
-        }
+       
         public async Task<DoorFrame> Get(int id)
         {
             try
@@ -116,5 +100,28 @@ namespace Dal.Services
         {
             throw new NotImplementedException();
         }
+        
+        public async Task<bool> Delete(int id)
+        {
+         try { 
+            // fetch entity directly from DB
+            var df = await db.DoorFrames.FirstOrDefaultAsync(d => d.Id == id);
+            if (df == null)
+                return false;          
+                    db.DoorFrames.Remove(df);
+                await db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("שגיאה במחיקת/ארכיון המשקוף: " + ex.Message);
+            }
+        }
     }
 }
+
+
+        // Improved Delete by id: uses async EF methods, avoids .Result, handles archive vs permanent delete
+       
+
+       

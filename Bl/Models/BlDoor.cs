@@ -52,6 +52,9 @@ public class BlDoor
 
     public int? Price { get; set; }
 
+    public bool? StatusArchive { get; set; }
+    public string? ImageUrl { get; set; }
+
 
     public bool Equals(BlDoor d)
     {

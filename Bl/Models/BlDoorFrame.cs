@@ -33,6 +33,8 @@ public class BlDoorFrame
 
     public string? Notes { get; set; }
     public int? Price { get; set; }
+    public bool? StatusArchive { get; set; }
+    public string? ImageUrl { get; set; }
 
     public bool Equals(BlDoorFrame d)
     {
