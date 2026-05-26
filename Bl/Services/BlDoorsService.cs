@@ -1,13 +1,15 @@
-﻿using Bl.Api;
+﻿using Azure.Core;
+using Bl.Api;
 using Bl.Models;
 using Dal.Api;
 using Dal.Models;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace Bl.Services
 
@@ -26,11 +28,23 @@ namespace Bl.Services
 
             Door d = allDoors.Find(d => convertFromDalDoorToBldoor(d).Equals(item));
 
-            if (d == null) {
-                 return Dal.doors.Create(convertFromBlDoorToDaldoor(item));
+            if (d == null)
+            {
+                var _mpfGenerator = new MpfGenerator();
+                var _mpfFileService = new MpfFileService(Dal);
+                // 3. יצירת MPF
+                var mpfContent = _mpfGenerator.Generate(item);
+                var id =  Dal.doors.Create(convertFromBlDoorToDaldoor(item));
 
+                // 4. שמירת MPF
+                await _mpfFileService.SaveAsync(
+                    id,
+                    mpfContent
+                );
+
+                return id;
             }
-                            return d.Id;
+            return d.Id;
         }
 
         public bool Delete(BlDoor item)
@@ -98,7 +112,16 @@ namespace Bl.Services
             newDoor.ShoeingB = c.ShoeingB;
             newDoor.ShoeingA = c.ShoeingA;
             newDoor.Notes = c.Notes;
-            newDoor.TextFileForTheMachine = c.TextFileForTheMachine;
+            //var fileName = Path.GetFileName(c.TextFileForTheMachine);
+            //newDoor.TextFileForTheMachine =
+            //c.TextFileForTheMachine != null
+            //? $"https://localhost:5001/api/Doors/file?fileName={Uri.EscapeDataString(c.TextFileForTheMachine)}"
+            //: null;
+            //newDoor.TextFileForTheMachine = c.TextFileForTheMachine;
+            newDoor.TextFileForTheMachine =
+    !string.IsNullOrWhiteSpace(c.TextFileForTheMachine)
+        ? $"https://localhost:7253/api/Door/file?fileName={Uri.EscapeDataString(Path.GetFileName(c.TextFileForTheMachine))}"
+        : null;
             newDoor.Height = c.Height;
             newDoor.Width = c.Width;
             newDoor.Leaf = c.Leaf;
@@ -113,6 +136,7 @@ namespace Bl.Services
             newDoor.ImageUrl = c.ImageUrl;
             return newDoor;
         }
+
 
         public Door convertFromBlDoorToDaldoor(BlDoor c)
         {
@@ -143,6 +167,7 @@ namespace Bl.Services
             newDoor.ImageUrl = c.ImageUrl;
             return newDoor;
         }
+       
         public async Task<int> UpdateDoorAsync(BlDoor item)
         {
             if (item == null)

@@ -1,6 +1,7 @@
 ﻿using Bl.Api;
 using Bl.Models;
-using Dal.Api;
+using Bl.Services;
+using Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DoorsProjectInServer.Controllers
@@ -54,6 +55,31 @@ namespace DoorsProjectInServer.Controllers
             {
                 return BadRequest(new { message = "שגיאה בהעלאת הקובץ: " + ex.Message });
             }
+        }
+        [HttpGet("file")]
+        public IActionResult GetFile([FromQuery] string fileName)
+        {
+            var folderPath = @"D:\C# METZADA\DoorsProjectInServer\DoorFiles";
+
+            var fullPath = Path.Combine(folderPath, fileName);
+
+            if (!System.IO.File.Exists(fullPath))
+                return NotFound();
+
+            var bytes = System.IO.File.ReadAllBytes(fullPath);
+
+            var contentType =FileHelper.GetContentType(fileName);
+            return File(bytes, contentType, fileName);
+        }
+
+        [HttpPost]
+        [Route("createMpf")]
+        public IActionResult createMpf(BlDoor job)
+        {
+            var generator = new MpfGenerator();
+            var mpf = generator.Generate(job);
+            return Ok(mpf);
+
         }
     }
 }

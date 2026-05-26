@@ -32,6 +32,9 @@ namespace Bl
 
         public IBlOrderItems orderItems { get; }
 
+        public IBlMpfGenerator mpfGenerator { get; }
+        public IBlMpfFileService mpfFileService { get; }
+
         public BlManager()
         {
             ServiceCollection services = new ServiceCollection();
@@ -48,6 +51,9 @@ namespace Bl
             services.AddSingleton<IBlCheck, BlCheckService>();
             services.AddSingleton<IDal, DalManager>();
             services.AddSingleton<IBlEmployees, BlEmployeesService>();
+            services.AddSingleton<IBlMpfGenerator, MpfGenerator>();
+            services.AddSingleton<IBlMpfFileService, MpfFileService>();
+
             ServiceProvider servicesProvider = services.BuildServiceProvider();
             employees = servicesProvider.GetRequiredService<IBlEmployees>();
             doors = servicesProvider.GetRequiredService<IBlDoors>();
@@ -56,6 +62,8 @@ namespace Bl
             doorsFrames = servicesProvider.GetRequiredService<IBlDoorsFrames>();
             checks = servicesProvider.GetRequiredService<IBlCheck>();
             orderItems = servicesProvider.GetRequiredService<IBlOrderItems>();
+            mpfGenerator = servicesProvider.GetRequiredService<IBlMpfGenerator>();
+            mpfFileService = servicesProvider.GetRequiredService<IBlMpfFileService>();
         }
     }
 }

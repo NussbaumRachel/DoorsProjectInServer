@@ -18,7 +18,7 @@ namespace Dal.Api
         public Task UpdateAsync(Door item);
         public Task UpdateDoorFilePathAsync(int doorId, string filePath);
         public Task<string> SaveDoorFileAsync(int doorId, IFormFile file);
-
+        public string createFilePath(int doorId);
 
 
     }
