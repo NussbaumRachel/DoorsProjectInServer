@@ -50,8 +50,7 @@ public class BlDoorFrame
             FramesHeightWithShutter.Equals(d.FramesHeightWithShutter) &&
             Opening.Equals(d.Opening) &&
             Profile.Equals(d.Profile) &&
-            Color.Equals(d.Color) &&
-            Notes.Equals(d.Notes);
+            Color.Equals(d.Color) ;
     }
 }
 
