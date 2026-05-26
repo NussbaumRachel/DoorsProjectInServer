@@ -6,6 +6,7 @@ using Dal;
 using Dal.Api;
 using Dal.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -69,8 +70,20 @@ namespace DoorsProjectInServer
                       .AllowAnyHeader();
             }));
 
-            var app = builder.Build();
 
+            
+            var app = builder.Build();
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "DoorFiles")),
+                RequestPath = "/doorfiles"
+            });
+
+           
+
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

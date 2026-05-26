@@ -56,21 +56,21 @@ namespace DoorsProjectInServer.Controllers
                 return BadRequest(new { message = "שגיאה בהעלאת הקובץ: " + ex.Message });
             }
         }
-        [HttpGet("file")]
-        public IActionResult GetFile([FromQuery] string fileName)
-        {
-            var folderPath = @"D:\C# METZADA\DoorsProjectInServer\DoorFiles";
+        //[HttpGet("file")]
+        //public IActionResult GetFile([FromQuery] string fileName)
+        //{
+        //    var folderPath = @"D:\C# METZADA\DoorsProjectInServer\DoorFiles";
 
-            var fullPath = Path.Combine(folderPath, fileName);
+        //    var fullPath = Path.Combine(folderPath, fileName);
 
-            if (!System.IO.File.Exists(fullPath))
-                return NotFound();
+        //    if (!System.IO.File.Exists(fullPath))
+        //        return NotFound();
 
-            var bytes = System.IO.File.ReadAllBytes(fullPath);
+        //    var bytes = System.IO.File.ReadAllBytes(fullPath);
 
-            var contentType =FileHelper.GetContentType(fileName);
-            return File(bytes, contentType, fileName);
-        }
+        //    var contentType =FileHelper.GetContentType(fileName);
+        //    return File(bytes, contentType, fileName);
+        //}
 
         [HttpPost]
         [Route("createMpf")]
@@ -80,6 +80,19 @@ namespace DoorsProjectInServer.Controllers
             var mpf = generator.Generate(job);
             return Ok(mpf);
 
+        }
+
+        [HttpGet("file")]
+        public IActionResult GetFile(string fileName)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "DoorFiles", fileName);
+
+            if (!System.IO.File.Exists(path))
+                return NotFound();
+
+            var fileBytes = System.IO.File.ReadAllBytes(path);
+
+            return File(fileBytes, "application/octet-stream", fileName);
         }
     }
 }
