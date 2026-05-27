@@ -31,6 +31,18 @@ namespace DoorsProjectInServer.Controllers
             return await Bl.customers.Create(newCustomer);
              
         }
-       
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> UpdateC(BlCustomer cust)
+        {
+            var id = await Bl.customers.UpdateAsync(cust);
+            return Ok(new { id });
+        }
+        [HttpDelete]
+        [Route("Delete")]
+        public Task<bool> deleteEmp(string id)
+        {
+            return Bl.customers.Delete(id);
+        }
     }
 }

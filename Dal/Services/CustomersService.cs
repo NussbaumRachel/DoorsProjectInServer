@@ -1,10 +1,11 @@
 ﻿using Dal.Api;
+using Dal.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dal.Models;
 
 namespace Dal.Services
 {
@@ -31,8 +32,58 @@ namespace Dal.Services
                 throw new Exception("Insert failed");
             }
         }
-        
+        public async Task UpdateAsync(Customer item)//////////////////////////////////////////
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+
+            await using var transaction = await db.Database.BeginTransactionAsync();
+
+            try
+            {
+                var existingEmployee = await db.Customers
+                    .FirstOrDefaultAsync(d => d.id == item.id);
+
+                if (existingEmployee == null)
+                    throw new Exception("הדלת לא נמצאה");
+
+                // 🔹 עדכון חכם (EF Core mapping במקום שדה-שדה ידני)
+                db.Entry(existingEmployee).CurrentValues.SetValues(item);
+
+                // 🔹 אופציונלי: שמירה על שדות שלא רוצים שידרסו
+                // למשל אם יש שדות מערכת:
+                // db.Entry(existingDoor).Property(x => x.CreatedAt).IsModified = false;
+
+                await db.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw new Exception("שגיאה בעדכון העובד: " + ex.Message);
+            }
+        }
         public void Update(Customer item) { }
+
+
+        public async Task<bool> Delete(string id)
+        {
+
+            var ch = GetAll().Result.Find(c => c.id == id);
+            try
+            {
+                db.Customers.Remove(ch);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                throw new ArgumentNullException("לא נמצאה הלקוח המתאים");
+
+            }
+
+        }
+
         public bool Delete(Customer item)
         {
             return true;
@@ -53,7 +104,7 @@ namespace Dal.Services
         {
             try
             {
-                return GetAll().Result.Find(c => c.Id == id);
+                return GetAll().Result.Find(c => c.id == id);
             }
             catch
             {

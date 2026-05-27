@@ -10,6 +10,9 @@ namespace Bl.Api
     {
         public BlCustomer Get(string id);
         public Task<bool> Create(BlCustomer item);
+        public Task<bool> Delete(string id);
+        public Task<int> UpdateAsync(BlCustomer item);
+
 
     }
 }

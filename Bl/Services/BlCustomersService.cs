@@ -23,7 +23,20 @@ namespace Bl.Services
             return await Dal.customers.Create(convertFromBlCustomerToDalCustomer(item));
            
         }
-      
+        public Task<bool> Delete(string id)
+        {
+            return Dal.customers.Delete(id);
+        }
+        public async Task<int> UpdateAsync(BlCustomer item)
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+
+            var dalEmp = convertFromBlCustomerToDalCustomer(item);
+            await Dal.customers.UpdateAsync(dalEmp);
+            return 1;
+
+        }
 
         public bool Delete(BlCustomer item)
         {
@@ -51,7 +64,7 @@ namespace Bl.Services
         {
             BlCustomer newCust = new BlCustomer()
             {
-            Id = c.Id,
+            Id = c.id,
             Name = c.Name,
             Notes = c.Notes,
             Address = c.Address,
@@ -70,7 +83,7 @@ namespace Bl.Services
         public Customer convertFromBlCustomerToDalCustomer(BlCustomer c)
         {
             Customer newCust = new Customer() {
-                Id = c.Id,
+                id = c.Id,
                 Name = c.Name,
                 Notes = c.Notes,
                 Address = c.Address,

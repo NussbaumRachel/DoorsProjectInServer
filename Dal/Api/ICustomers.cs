@@ -14,5 +14,8 @@ namespace Dal.Api
         public Task<Customer> Get(string id);
         public void DeleteAll();
         public Task<bool> Create(Customer item);
+        public  Task UpdateAsync(Customer item);
+        public Task<bool> Delete(string id);
+
     }
 }
