@@ -17,7 +17,7 @@ public partial class Order
 
     public DateTime? UpdateDate { get; set; }
 
-    public string? EmployeeId { get; set; }
+    public int? EmployeeId { get; set; }
 
     public string? Street { get; set; }
 

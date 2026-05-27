@@ -194,14 +194,13 @@ public partial class DbManager : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC0741688843");
+            entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC07D70966A6");
 
             entity.Property(e => e.ApartmentNum).HasColumnName("Apartment_num");
             entity.Property(e => e.BuildingNum).HasColumnName("Building_num");
             entity.Property(e => e.CustId).UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.CustName).UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.DeliveryDate).HasColumnName("Delivery_date");
-            entity.Property(e => e.EmployeeId).UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Floor).HasColumnName("Floor ");
             entity.Property(e => e.Notes).UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.OrderDate).HasColumnName("Order_date");
@@ -226,7 +225,7 @@ public partial class DbManager : DbContext
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__OrderItem__Order__18EBB532");
+                .HasConstraintName("FK__OrderItem__Order__756D6ECB");
         });
 
         OnModelCreatingPartial(modelBuilder);
