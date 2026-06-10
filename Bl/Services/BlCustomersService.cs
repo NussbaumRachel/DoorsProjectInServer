@@ -64,7 +64,7 @@ namespace Bl.Services
         {
             BlCustomer newCust = new BlCustomer()
             {
-            Id = c.id,
+            Id = c.Id,
             Name = c.Name,
             Notes = c.Notes,
             Address = c.Address,
@@ -83,7 +83,7 @@ namespace Bl.Services
         public Customer convertFromBlCustomerToDalCustomer(BlCustomer c)
         {
             Customer newCust = new Customer() {
-                id = c.Id,
+                Id = c.Id,
                 Name = c.Name,
                 Notes = c.Notes,
                 Address = c.Address,

@@ -42,7 +42,7 @@ namespace Dal.Services
             try
             {
                 var existingEmployee = await db.Customers
-                    .FirstOrDefaultAsync(d => d.id == item.id);
+                    .FirstOrDefaultAsync(d => d.Id == item.Id);
 
                 if (existingEmployee == null)
                     throw new Exception("הדלת לא נמצאה");
@@ -69,7 +69,7 @@ namespace Dal.Services
         public async Task<bool> Delete(string id)
         {
 
-            var ch = GetAll().Result.Find(c => c.id == id);
+            var ch = GetAll().Result.Find(c => c.Id == id);
             try
             {
                 db.Customers.Remove(ch);
@@ -104,7 +104,7 @@ namespace Dal.Services
         {
             try
             {
-                return GetAll().Result.Find(c => c.id == id);
+                return GetAll().Result.Find(c => c.Id == id);
             }
             catch
             {

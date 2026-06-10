@@ -45,9 +45,9 @@ public partial class DbManager : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.id).HasName("PK__Customer__3214EC0782E2575A");
+            entity.HasKey(e => e.Id).HasName("PK__Customer__3214EC0782E2575A");
 
-            entity.Property(e => e.id)
+            entity.Property(e => e.Id)
                 .HasMaxLength(9)
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Address).UseCollation("SQL_Latin1_General_CP1_CI_AS");
@@ -66,9 +66,7 @@ public partial class DbManager : DbContext
             entity.Property(e => e.Email)
                 .HasMaxLength(40)
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
-            entity.Property(e => e.Name)
-                .HasMaxLength(20)
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.Name).UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Notes).UseCollation("SQL_Latin1_General_CP1_CI_AS");
             entity.Property(e => e.Phone)
                 .HasMaxLength(25)
